@@ -13,7 +13,7 @@
       <tr v-for="pet in pets" :key="pet.id">
         <td>{{ pet.pet_name }}</td>
         <td>{{ pet.race.name }}</td>
-        <td>{{ pet.size }}</td>
+        <td>{{ this.translateWeight(pet.size) }}</td>
         <td>{{ pet.age }}</td>
         <td>{{ pet.weight }}</td>
       </tr>
@@ -28,6 +28,27 @@ export default {
   data() {
     return {
       pets: []
+    }
+  },
+  methods: {
+    translateWeight(name) {
+      switch (name) {
+        case 'SMALL': {
+          return 'Pequeno'
+        }
+
+        case 'MEDIUM': {
+          return 'Médio'
+        }
+
+        case 'LARGE': {
+          return 'Grande'
+        }
+
+        case 'EXTRA LARGE': {
+          return 'Gigante'
+        }
+      }
     }
   },
   mounted() {
