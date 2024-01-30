@@ -1,24 +1,27 @@
 <template>
-  <v-table>
-    <thead>
-      <tr>
-        <th class="text-left">Nome</th>
-        <th class="text-left">Raça</th>
-        <th class="text-left">Porte</th>
-        <th class="text-left">Idade</th>
-        <th class="text-left">Peso</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="pet in pets" :key="pet.id">
-        <td>{{ pet.pet_name }}</td>
-        <td>{{ pet.race.name }}</td>
-        <td>{{ this.translateWeight(pet.size) }}</td>
-        <td>{{ pet.age }}</td>
-        <td>{{ pet.weight }}</td>
-      </tr>
-    </tbody>
-  </v-table>
+  <v-container>
+    <h1>Lista de pets</h1>
+    <v-table>
+      <thead class="header-table">
+        <tr>
+          <th class="text-left">Nome</th>
+          <th class="text-left">Raça</th>
+          <th class="text-left">Porte</th>
+          <th class="text-left">Idade</th>
+          <th class="text-left">Peso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="pet in pets" :key="pet.id">
+          <td>{{ pet.pet_name }}</td>
+          <td>{{ pet.race.name }}</td>
+          <td>{{ this.translateWeight(pet.size) }}</td>
+          <td>{{ pet.age }}</td>
+          <td>{{ pet.weight }}</td>
+        </tr>
+      </tbody>
+    </v-table>
+  </v-container>
 </template>
 
 <script>
@@ -36,17 +39,17 @@ export default {
         case 'SMALL': {
           return 'Pequeno'
         }
-
         case 'MEDIUM': {
           return 'Médio'
         }
-
         case 'LARGE': {
           return 'Grande'
         }
-
-        case 'EXTRA LARGE': {
+        case 'EXTRA_LARGE': {
           return 'Gigante'
+        }
+        default: {
+          return name
         }
       }
     }
@@ -56,7 +59,21 @@ export default {
       .then((data) => {
         this.pets = data
       })
-      .catch()
+      .catch(() => {
+        alert('Houve um erro')
+      })
   }
 }
 </script>
+
+<style scoped>
+.header-table {
+  background: tomato;
+  color: #fff;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(2n) {
+  background: #f2f0f0;
+}
+</style>
