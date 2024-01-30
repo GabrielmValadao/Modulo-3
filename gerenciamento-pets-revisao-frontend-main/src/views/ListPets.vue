@@ -25,7 +25,7 @@ export default {
     }
   },
   mounted() {
-    PetService.getAllPets()
+    PetService.getAllPets(this.$route.params.id)
       .then((data) => {
         this.pets = data
       })
