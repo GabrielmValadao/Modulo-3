@@ -1,7 +1,23 @@
-<template></template>
+<template>
+  <v-table>
+    <thead>
+      <tr>
+        <th class="text-left">Nome</th>
+        <th class="text-left">Raça</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="pet in pets" :key="pet.id">
+        <td>{{ pet.pet_name }}</td>
+        <td>{{ pet.race.name }}</td>
+      </tr>
+    </tbody>
+  </v-table>
+</template>
 
 <script>
 import PetService from '../services/PetService'
+
 export default {
   data() {
     return {
@@ -13,9 +29,7 @@ export default {
       .then((data) => {
         this.pets = data
       })
-      .catch((error) => {
-        alert('Houve um erro')
-      })
+      .catch()
   }
 }
 </script>
