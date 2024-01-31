@@ -1,4 +1,7 @@
 <template>
+  <v-snackbar v-model="snackbarSuccess" :timeout="3000" color="success" location="top right">
+    Cadastrado com sucesso!
+  </v-snackbar>
   <form @submit.prevent="handleSubmit">
     <v-card width="80%" class="mx-auto px-6 pt-8" title="Cadastro de pet">
       <v-row>
@@ -72,7 +75,8 @@ export default {
 
       itemsSize: optionsSize,
       itemsSpecies: [],
-      itemsRaces: []
+      itemsRaces: [],
+      snackbarSuccess: false
     }
   },
 
@@ -97,6 +101,16 @@ export default {
         specie_id: this.specie,
         weight: this.weight
       })
+        .then(() => {
+          ;(this.snackbarSuccess = true),
+            (this.name = ''),
+            (this.age = 1),
+            (this.weight = 1),
+            (this.size = ''),
+            (this.specie = ''),
+            (this.race = '')
+        })
+        .catch()
     }
   }
 }
