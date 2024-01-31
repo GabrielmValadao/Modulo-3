@@ -58,6 +58,7 @@
 import { optionsSize } from '../constants/pets.constans'
 import SpecieService from '../services/SpecieService'
 import RaceService from '../services/RaceService'
+import PetService from '../services/PetService'
 
 export default {
   data() {
@@ -87,7 +88,16 @@ export default {
   },
 
   methods: {
-    handleSubmit() {}
+    handleSubmit() {
+      PetService.createPet({
+        name: this.name,
+        age: this.age,
+        size: this.size,
+        race_id: this.race,
+        specie_id: this.specie,
+        weight: this.weight
+      })
+    }
   }
 }
 </script>
