@@ -1,10 +1,9 @@
-import axios from 'axios'
-
+import api from './api'
 class SpecieService {
   async createSpecie() {}
 
   async getAllSpecies() {
-    const response = await axios.get('http://127.0.0.1:8000/api/species', {
+    const response = await api.get('http://127.0.0.1:8000/api/species', {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('@token_petshop')
       }
