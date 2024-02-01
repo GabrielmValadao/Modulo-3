@@ -3,6 +3,7 @@
     <v-img
       class="mx-auto my-6"
       max-width="228"
+      height="150"
       src="https://yt3.googleusercontent.com/N2jcFNzjfqRVZ07qkh3xn1VM7ka9Xa3O8o968DAOqoX4i1nRC_yv2hhcLfSf3tY5BJ6XcBuegg=s900-c-k-c0x00ffffff-no-rj"
     ></v-img>
 
