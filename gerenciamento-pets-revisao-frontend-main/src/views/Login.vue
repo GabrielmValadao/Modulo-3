@@ -42,6 +42,7 @@
 
 <script>
 import AuthenticationService from '../services/AuthenticationService'
+import api from '../services/api'
 
 export default {
   data() {
@@ -58,7 +59,7 @@ export default {
         password: this.password
       })
         .then((data) => {
-          console.log(data)
+          api.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`
           localStorage.setItem('@token_petshop', data.data.token)
           this.$router.push('/home')
         })
