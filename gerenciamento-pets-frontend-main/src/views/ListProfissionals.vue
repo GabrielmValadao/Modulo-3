@@ -76,19 +76,19 @@ export default {
     handleSubmit() {
       ProfessionalService.createProfessional({
         name: this.name,
-        cpf: this.cpf,
-        contact: this.contact,
-        email: this.email,
+        cpf:  this.cpf,
+        contact:  this.contact,
+        email:  this.email,
         speciality: this.speciality,
-        register: this.register
+        register:  this.register,
       })
-        .then(() => {
-          alert('Cadastrado com sucesso')
-          this.dialog = false
-        })
-        .catch(() => {
-          alert('Erro ao cadastrar')
-        })
+      .then(() => {
+        alert("Cadastrado com sucesso")
+        this.dialog = false
+      })
+      .catch(() => {
+        alert("Erro ao cadastrar")
+      })
     }
   },
   mounted() {}

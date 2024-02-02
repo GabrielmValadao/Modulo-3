@@ -22,15 +22,16 @@
       <router-link to="/veterinarios" v-if="permissions.includes('get-profissionals')">
         <v-list-item prepend-icon="mdi-star" title="Profissionais" value="starred"> </v-list-item>
       </router-link>
+
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-  data() {
+  data(){
     return {
-      permissions: JSON.parse(localStorage.getItem('@permissions_petshop'))
+      permissions: JSON.parse(localStorage.getItem("@permissions_petshop"))
     }
   }
 }

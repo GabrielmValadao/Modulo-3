@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     handleRedirect(id) {
-      this.$router.push(`/pets/${id}`)
+        this.$router.push(`/pets/${id}`);
     }
   },
   mounted() {

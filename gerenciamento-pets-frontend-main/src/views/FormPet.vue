@@ -1,9 +1,10 @@
 <template>
-  <v-snackbar v-model="snackbarSuccess" :timeout="3000" color="success" location="top right">
+  <v-snackbar v-model="success" color="success" location="top right" timeout="3000">
     Pet cadastrado com sucesso!
   </v-snackbar>
+
   <form @submit.prevent="handleSubmit">
-    <v-card width="80%" class="mx-auto px-6 pt-8" title="Cadastro de pet">
+    <v-card width="80%" class="mx-auto px-6 mt-4" title="Cadastro de pet">
       <v-row>
         <v-col cols="12" md="8">
           <v-text-field
@@ -16,6 +17,7 @@
         <v-col cols="12" md="2" sm="6">
           <v-text-field
             label="Idade"
+            type="number"
             variant="outlined"
             v-model="age"
             :error-messages="errors.age"
@@ -24,30 +26,31 @@
         <v-col cols="12" md="2" sm="6">
           <v-text-field
             label="Peso"
+            type="number"
             variant="outlined"
             v-model="weight"
             :error-messages="errors.weight"
           />
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12" md="4">
           <v-select
-            label="Porte"
+            label="Tamanho"
             :items="itemsSize"
             variant="outlined"
-            placeholder="Selecione o porte do seu pet"
+            placeholder="Selecione um item"
             v-model="size"
             :error-messages="errors.size"
           />
         </v-col>
-
         <v-col cols="12" md="4">
           <v-select
             label="Espécie"
             :items="itemsSpecies"
             variant="outlined"
-            placeholder="Selecione uma espécie"
+            placeholder="Selecione um espécie"
             v-model="specie_id"
             item-title="name"
             item-value="id"
@@ -59,7 +62,7 @@
             label="Raça"
             :items="itemsRaces"
             variant="outlined"
-            placeholder="Selecione uma raça"
+            placeholder="Selecione um raça"
             v-model="race_id"
             item-title="name"
             item-value="id"
@@ -76,10 +79,12 @@
 </template>
 
 <script>
-import { optionsSize } from '../constants/pets.constans'
+import { optionsSize } from '../constants/pet.constants'
+
 import SpecieService from '../services/SpecieService'
 import RaceService from '../services/RaceService'
 import PetService from '../services/PetService'
+
 import { schemaPetForm } from '../validations/pet.validations'
 import { captureErrorYup } from '../utils/captureErrorsYup'
 import * as yup from 'yup'
@@ -97,11 +102,10 @@ export default {
       itemsSize: optionsSize,
       itemsSpecies: [],
       itemsRaces: [],
-      snackbarSuccess: false,
+      success: false,
       errors: {}
     }
   },
-
   mounted() {
     SpecieService.getAllSpecies()
       .then((data) => {
@@ -113,7 +117,6 @@ export default {
       this.itemsRaces = data
     })
   },
-
   methods: {
     handleSubmit() {
       try {
@@ -130,7 +133,8 @@ export default {
 
         PetService.createPet(body)
           .then(() => {
-            this.snackbarSuccess = true
+            this.success = true
+
             this.name = ''
             this.age = 1
             this.weight = 1
@@ -152,4 +156,5 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
