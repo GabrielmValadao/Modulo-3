@@ -3,7 +3,6 @@
     <v-img
       class="mx-auto my-6"
       max-width="228"
-      height="150"
       src="https://yt3.googleusercontent.com/N2jcFNzjfqRVZ07qkh3xn1VM7ka9Xa3O8o968DAOqoX4i1nRC_yv2hhcLfSf3tY5BJ6XcBuegg=s900-c-k-c0x00ffffff-no-rj"
     ></v-img>
 
@@ -41,8 +40,9 @@
 </template>
 
 <script>
-import AuthenticationService from '../services/AuthenticationService'
 import api from '../services/api'
+
+import AuthenticationService from '../services/AuthenticationService'
 
 export default {
   data() {
@@ -61,6 +61,7 @@ export default {
         .then((data) => {
           api.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`
           localStorage.setItem('@token_petshop', data.data.token)
+          localStorage.setItem('@permissions_petshop', JSON.stringify(data.data.permissions))
           this.$router.push('/home')
         })
         .catch((error) => {
