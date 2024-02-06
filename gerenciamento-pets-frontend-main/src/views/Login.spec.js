@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest'
 import Login from './Login.vue'
 import { mount } from '@vue/test-utils'
-
+//FAZER ISSO SOMENTE PARA TELAS QUE USAM VUETIFY
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -22,4 +22,6 @@ describe('Tela de login', () => {
     })
     expect(component).toBeTruthy()
   })
+
+  it('Espera-se que ao submeter o formulário, seja redirecionado para tela home', () => {})
 })
