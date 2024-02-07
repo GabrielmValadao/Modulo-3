@@ -8,6 +8,7 @@
       :title="specie.name"
       link
       @click="handleRedirect(specie.id)"
+      data-test="card-item"
     />
   </div>
 </template>
@@ -23,12 +24,13 @@ export default {
   },
   methods: {
     handleRedirect(id) {
-        this.$router.push(`/pets/${id}`);
+      this.$router.push(`/pets/${id}`)
     }
   },
   mounted() {
     SpecieService.getAllSpecies()
       .then((data) => {
+        console.log('data', data)
         this.species = data
       })
       .catch((error) => {
