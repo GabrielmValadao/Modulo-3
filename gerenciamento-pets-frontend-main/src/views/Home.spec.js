@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import Home from './Home.vue'
 import { flushPromises, mount } from '@vue/test-utils'
 
@@ -14,7 +14,7 @@ const vuetify = createVuetify({
 
 global.ResizeObserver = require('resize-observer-polyfill')
 
-describe('Tela home', () => {
+describe('Tela Home', () => {
   vi.spyOn(SpecieService, 'getAllSpecies').mockResolvedValue([
     {
       id: 1,
@@ -30,27 +30,26 @@ describe('Tela home', () => {
     }
   ])
 
-  it('Espera-se que a tela seja rendenizada', () => {
+  it('Espera-se que a tela seja renderizada', () => {
     const component = mount(Home, {
       global: {
         plugins: [vuetify]
       }
     })
 
-    expect(component).toBeTruthy
+    expect(component).toBeTruthy()
   })
 
-  it('Espera-se que exiba na tela os nomes das espécies', async () => {
+  it('Espera-se exiba na tela os nomes das espécies', async () => {
     const component = mount(Home, {
       global: {
         plugins: [vuetify]
       }
     })
 
-    await flushPromises
-
-    expect(component.text()).toContain('Cachorro')
+    await flushPromises()
     expect(component.text()).toContain('Gato')
+    expect(component.text()).toContain('Cachorro')
     expect(component.text()).toContain('Aves')
   })
 
@@ -61,7 +60,7 @@ describe('Tela home', () => {
       }
     })
 
-    await flushPromises
+    await flushPromises()
 
     const cards = component.findAll("[data-test='card-item']")
 
