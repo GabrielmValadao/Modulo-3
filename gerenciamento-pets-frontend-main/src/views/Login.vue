@@ -9,6 +9,13 @@
     <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
       <v-alert color="error" closable title="Houve um erro ao realizar o login" />
 
+      <v-alert
+        v-if="showError"
+        color="error"
+        closable
+        title="Houve um erro ao realizar o login"
+      ></v-alert>
+
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>
 
       <v-text-field
@@ -61,7 +68,8 @@ export default {
     return {
       visible: false,
       email: '',
-      password: ''
+      password: '',
+      showError: false
     }
   },
   methods: {
