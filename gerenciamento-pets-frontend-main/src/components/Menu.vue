@@ -3,8 +3,8 @@
     <v-list>
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        title="Douglas Cavalcante"
-        subtitle="doug@gmail.com"
+        title="Gabriel Valadão"
+        subtitle="metzdorfgabriel@gmail.com"
       ></v-list-item>
     </v-list>
 
