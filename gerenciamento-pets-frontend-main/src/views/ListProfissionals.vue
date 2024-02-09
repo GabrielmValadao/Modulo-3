@@ -4,6 +4,18 @@
       <h1>Lista de veterinários</h1>
       <v-btn color="orange" type="submit" variant="flat" @click="dialog = true"> Novo </v-btn>
     </div>
+    <form @submit.prevent="handleSearch">
+      <v-row>
+        <v-col cols="12">
+          <v-text-field
+            placeholder="Pesquise por uma informação"
+            variant="outlined"
+            v-model="text"
+            data-test="input-text"
+          />
+        </v-col>
+      </v-row>
+    </form>
     <v-table>
       <thead class="header-table">
         <tr>
@@ -12,7 +24,13 @@
           <th class="text-left">Registro</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr v-for="professional in professionals" :key="professional.id" data-test="row-table">
+          <td>{{ professional.people.name }}</td>
+          <td>{{ professional.speciality }}</td>
+          <td>{{ professional.register }}</td>
+        </tr>
+      </tbody>
     </v-table>
   </v-container>
 
@@ -59,10 +77,14 @@
 
 <script>
 import ProfessionalService from '../services/ProfessionalService'
+import FormPet from './FormPet.vue'
 
 export default {
+  components: { FormPet },
   data() {
     return {
+      text: '',
+      professionals: [],
       dialog: false,
       name: '',
       email: '',
@@ -76,22 +98,36 @@ export default {
     handleSubmit() {
       ProfessionalService.createProfessional({
         name: this.name,
-        cpf:  this.cpf,
-        contact:  this.contact,
-        email:  this.email,
+        cpf: this.cpf,
+        contact: this.contact,
+        email: this.email,
         speciality: this.speciality,
-        register:  this.register,
+        register: this.register
       })
-      .then(() => {
-        alert("Cadastrado com sucesso")
-        this.dialog = false
-      })
-      .catch(() => {
-        alert("Erro ao cadastrar")
-      })
+        .then(() => {
+          alert('Cadastrado com sucesso')
+          this.dialog = false
+          this.getList()
+        })
+        .catch(() => {
+          alert('Erro ao cadastrar')
+        })
+    },
+    handleSearch() {
+      console.log('SUBMETENDO -------------------------------------------')
+      this.getList()
+    },
+    getList() {
+      ProfessionalService.getAllProfessionals(this.text)
+        .then((data) => {
+          this.professionals = data
+        })
+        .catch(() => alert('Houve um error'))
     }
   },
-  mounted() {}
+  mounted() {
+    this.getList()
+  }
 }
 </script>
 
