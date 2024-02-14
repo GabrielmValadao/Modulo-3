@@ -7,8 +7,6 @@
     ></v-img>
 
     <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
-      <v-alert color="error" closable title="Houve um erro ao realizar o login" />
-
       <v-alert
         v-if="showError"
         color="error"
@@ -79,14 +77,18 @@ export default {
         password: this.password
       })
         .then((data) => {
+          console.log('ENTREIIII AQUIII')
+
           api.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`
           localStorage.setItem('@token_petshop', data.data.token)
           localStorage.setItem('@permissions_petshop', JSON.stringify(data.data.permissions))
+          localStorage.setItem('@name', data.data.name)
+          localStorage.setItem('@profile', data.data.profile)
           this.$router.push('/home')
         })
         .catch((error) => {
           console.log(error)
-          alert('Credenciais incorretas')
+          this.showError = true
         })
     }
   }

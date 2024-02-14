@@ -4,14 +4,27 @@
   </v-snackbar>
 
   <form @submit.prevent="handleSubmit">
-    <v-card width="80%" class="mx-auto px-6 mt-4" title="Cadastro de pet">
-      <v-row>
+    <v-card
+      width="80%"
+      class="mx-auto px-6 mt-4"
+      :title="petId ? 'Edição de pet' : 'Cadastro de pet'"
+    >
+      <v-alert
+        v-if="showError"
+        color="error"
+        closable
+        title="Houve um erro ao cadastrar o pet"
+        class="mb-8"
+      ></v-alert>
+
+      <v-row class="mt8">
         <v-col cols="12" md="8">
           <v-text-field
             label="Nome"
             variant="outlined"
             v-model="name"
             :error-messages="errors.name"
+            data-test="input-name"
           />
         </v-col>
         <v-col cols="12" md="2" sm="6">
@@ -21,6 +34,7 @@
             variant="outlined"
             v-model="age"
             :error-messages="errors.age"
+            data-test="input-age"
           />
         </v-col>
         <v-col cols="12" md="2" sm="6">
@@ -30,6 +44,8 @@
             variant="outlined"
             v-model="weight"
             :error-messages="errors.weight"
+            data-test="input-weight"
+            step="0.1"
           />
         </v-col>
       </v-row>
@@ -43,6 +59,7 @@
             placeholder="Selecione um item"
             v-model="size"
             :error-messages="errors.size"
+            data-test="select-size"
           />
         </v-col>
         <v-col cols="12" md="4">
@@ -55,6 +72,7 @@
             item-title="name"
             item-value="id"
             :error-messages="errors.specie_id"
+            data-test="select-specie"
           />
         </v-col>
         <v-col cols="12" md="4">
@@ -67,12 +85,14 @@
             item-title="name"
             item-value="id"
             :error-messages="errors.race_id"
+            data-test="select-race"
           />
         </v-col>
       </v-row>
-
       <v-card-actions class="d-flex justify-end">
-        <v-btn color="orange" type="submit" variant="flat"> Cadastrar </v-btn>
+        <v-btn color="orange" type="submit" variant="flat" data-test="submit-button">
+          {{ petId ? 'Editar' : 'Cadastrar' }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </form>
@@ -98,15 +118,29 @@ export default {
       size: '',
       specie_id: '',
       race_id: '',
+      description: '',
 
       itemsSize: optionsSize,
       itemsSpecies: [],
       itemsRaces: [],
       success: false,
-      errors: {}
+      errors: {},
+      showError: false,
+      petId: this.$route.params.id
     }
   },
   mounted() {
+    if (this.petId) {
+      PetService.findOnePet(this.petId).then((data) => {
+        this.name = data.name
+        this.age = data.age
+        this.weight = data.weight
+        this.size = data.size
+        this.race_id = data.race_id
+        this.specie_id = data.specie_id
+      })
+    }
+
     SpecieService.getAllSpecies()
       .then((data) => {
         this.itemsSpecies = data
@@ -126,25 +160,34 @@ export default {
           size: this.size,
           race_id: this.race_id,
           specie_id: this.specie_id,
-          weight: this.weight
+          weight: this.weight,
+          description: this.description
         }
 
         schemaPetForm.validateSync(body, { abortEarly: false })
 
-        PetService.createPet(body)
-          .then(() => {
-            this.success = true
+        if (this.petId) {
+          PetService.editPet(body, this.petId)
+            .then(() => {
+              alert('Pet atualizado com sucesso')
+            })
+            .catch(() => alert('Houve um erro ao atualizar o pet'))
+        } else {
+          PetService.createPet(body)
+            .then(() => {
+              this.success = true
 
-            this.name = ''
-            this.age = 1
-            this.weight = 1
-            this.size = ''
-            this.specie_id = ''
-            this.race_id = ''
-          })
-          .catch(() => {
-            alert('Houve um erro ao cadastrar')
-          })
+              this.name = ''
+              this.age = 1
+              this.weight = 1
+              this.size = ''
+              this.specie_id = ''
+              this.race_id = ''
+            })
+            .catch(() => {
+              this.showError = true
+            })
+        }
       } catch (error) {
         if (error instanceof yup.ValidationError) {
           this.errors = captureErrorYup(error)
@@ -156,5 +199,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

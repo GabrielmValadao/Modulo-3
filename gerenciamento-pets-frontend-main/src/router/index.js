@@ -5,7 +5,7 @@ import ListPets from '../views/ListPets.vue'
 import FormPet from '../views/FormPet.vue'
 import Login from '../views/Login.vue'
 import ListProfissionals from '../views/ListProfissionals.vue'
-import Aprendizado from '../views/Aprendizado.vue'
+import FormUser from '../views/FormUser.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +19,11 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/pets/editar/:id',
+      name: 'FormPetEdit',
+      component: FormPet
     },
     {
       path: '/pets/:id',
@@ -36,9 +41,9 @@ const router = createRouter({
       component: ListProfissionals
     },
     {
-      path: '/aprendizado',
-      name: 'Aprendizado',
-      component: Aprendizado
+      path: '/usuarios',
+      name: 'FormUser',
+      component: FormUser
     }
   ]
 })
