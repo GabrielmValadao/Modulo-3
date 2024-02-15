@@ -34,7 +34,7 @@ class PetService {
 
   async exportProfilePet(petId, petName) {
     const response = await api.get(`pets/perfil?id=${petId}`, { responseType: 'blob' })
-    saveAs(response.data, `${petName.pdf}`)
+    saveAs(response.data, `${petName}.pdf`)
   }
 }
 
