@@ -32,7 +32,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-select
                 label="Status"
                 :items="itemsStatus"
@@ -41,6 +41,10 @@
                 v-model="status"
               />
             </v-col>
+          </v-row>
+          <v-row class="mb-4">
+            <VDatePicker v-model="date" mode="date" />
+            {{ date }}
           </v-row>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="orange" type="submit" variant="flat"> Cadastrar </v-btn>
@@ -54,6 +58,7 @@
 <script>
 import { optionsStatus } from '@/constants/vaccine.constants'
 import { VCalendar } from 'vuetify/lib/labs/components.mjs'
+import { date } from 'yup'
 
 export default {
   data() {
@@ -62,6 +67,7 @@ export default {
       name: '',
       dose: '',
       status: 'DONE',
+      date: new Date(),
       itemsStatus: optionsStatus,
       vaccines: [
         {
