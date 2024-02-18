@@ -7,6 +7,9 @@ import Login from '../views/Login.vue'
 import ListProfissionals from '../views/ListProfissionals.vue'
 import FormUser from '../views/FormUser.vue'
 import VaccinationForm from '../views/VaccinationForm.vue'
+import Adoptions from '../views/Adoptions.vue'
+
+import AdoptionsDocuments from '../views/Documents.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +53,16 @@ const router = createRouter({
       path: '/pets/:id/vacinacao',
       name: 'VaccinationForm',
       component: VaccinationForm
+    },
+    {
+      path: '/adocoes',
+      name: 'Adoptions',
+      component: Adoptions
+    },
+    {
+      path: '/adocoes/documentos/:id',
+      name: 'AdoptionsDocuments',
+      component: AdoptionsDocuments
     }
   ]
 })
